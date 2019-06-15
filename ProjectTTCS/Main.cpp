@@ -43,7 +43,7 @@ bool Equal(char x, char y) {
 }
 bool Equal(string x, string y) {
 	int pos = 0;
-	if (x == y) {
+	if (x[0] == y[0]) {
 		while (x[pos] != '\0' && y[pos] != '\0') {
 			if (x[pos] != y[pos]) return false;
 			else pos++;
@@ -94,6 +94,79 @@ string toUpper(const string input) {
 		}
 	}
 	return str;
+}
+string setWidth(string n, int size) {
+	int temp = size - (n).length();
+	if (temp < 0) {
+		return n;
+	}
+	else {
+		for (int i = 0; i < temp; i++)
+		{
+			n += ' ';
+		}
+	}
+	return n;
+}
+string setWidth(char x, int size) {
+	string temp = &x;
+	for (int i = 0; i < size; i++)
+	{
+		temp += x;
+	}
+	return temp;
+}
+int Find(string line, char x)
+{
+	int pos = 0;
+	while (line[pos] != '\0')
+	{
+		if (Equal(line[pos], x)) {
+			return pos;
+		}
+		else if (line[pos + 1] == '\0') {
+			return pos + 1;
+		}
+		else pos++;
+	}
+	/*for (int i = 0; i < line.length(); i++)
+	{
+		if (Equal(line[i], x)) {
+			return i;
+		}
+	}
+*/
+}
+string* Split(string line, char x) {
+	string* substring = new string[100];
+	int found, pos = 0;
+	string temp = line;
+	while (temp != "\0") {
+		found = Find(temp, x);
+		for (int i = 0; i < found; i++)
+		{
+			substring[pos] += temp[i];
+		}
+		temp.erase(0, found + 1);
+		pos++;
+	}
+	return substring;
+}
+string outputBOD(string line) {
+	string* a = Split(line, '/');
+	string day, mon, year;
+	int d = StringToInt(*a);
+	int m = StringToInt(*(a + 1));
+	if (d > 0 && d < 10) {
+		day = "0" + IntToString(d);
+	}
+	else day = *a;
+	if (m > 0 && m < 10) {
+		mon = "0" + IntToString(m);
+	}
+	else mon = *(a + 1);
+	string x = day + "/" + mon + "/" + *(a + 2);
+	return x;
 }
 struct LinkedList {
 	NhanVien data;
@@ -353,6 +426,7 @@ int SearchByString(node head, node p, string subString) {
 }
 void DisplaySBS(node head, string sub) {
 	int flag = 0;
+	cout << setWidth('*', 100) << endl;
 	for (node p = head; p != NULL; p = p->next)
 	{
 		int i = SearchByString(head, p, sub);
@@ -360,11 +434,12 @@ void DisplaySBS(node head, string sub) {
 			flag++;
 			NhanVien value = Get(head, i);
 			cout << "====================" << endl;
-			cout << "STT: " << i << endl;
+			cout << "STT: " << i + 1 << endl;
 			cout << "Ho ten : " << value.getHoTen() << endl;
 			cout << "Chuc vu : " << value.getChucVu() << endl;
 			cout << "Ngay sinh : " << value.getNgaySinh() << endl;
 			cout << "He so luong : " << value.getHeSoLuong() << endl;
+			//value.hienThi();
 			//cout << "====================" << endl;
 		}
 	}
@@ -373,59 +448,27 @@ void DisplaySBS(node head, string sub) {
 		cout << "KHONG TIM THAY" << endl;
 		cout << "====================" << endl;
 	}
+	cout << setWidth('*', 100) << endl;
 }
-string setWidth(string n, int size) {
-	int temp = size - (n).length();
-	if (temp < 0) {
-		return n;
-	}
-	else {
-		for (int i = 0; i < temp; i++)
-		{
-			n += ' ';
-		}
-	}
-	return n;
-}
-string setWidth(char x, int size) {
-	string temp = "=";
-	for (int i = 0; i < size; i++)
-	{
-		temp += x;
-	}
-	return temp;
-}
+
 void Traverser(node head) {
 	cout << endl;
 	int i = 0;
-	cout << setWidth('=', 50) << endl;
-	cout << "STT" << setw(5) << "|";
-	cout << "HO VA TEN" << setw(30) << "|";
-	cout << "CHUC VU" << setw(30) << "|";
-	cout << "NGAY SINH" << setw(10) << "|";
-	cout << "HE SO LUONG" << setw(5) << "|" << endl;
 
-	/*cout << setWidth('=', 124) << endl;
+	cout << setWidth('=', 100) << endl;
 	cout << setWidth("STT", 10) << "|";
-	cout << setWidth("Ho va ten", 30) << "|";
-	cout << setWidth("Chuc vu", 40) << "|";
-	cout << setWidth("Ngay sinh", 40) << "|";
-	cout << "He so luong" << endl;*/
+	cout << setWidth("Ho va ten", 25) << "|";
+	cout << setWidth("Chuc vu", 25) << "|";
+	cout << setWidth("Ngay thang nam sinh", 25) << "|";
+	cout << "He so luong" << endl;
 	for (node p = head; p != NULL; p = p->next)
 	{
-		cout << IntToString(i) << setw(5) << "|";
-		cout << p->data.getHoTen() << setw(30) << "|";
-		cout << p->data.getChucVu() << setw(30) << "|";
-		cout << p->data.getNgaySinh() << setw(10) << "|";
-		cout << p->data.getHeSoLuong() << std::setprecision(1) << fixed << setw(5) << "|" << endl;
+		cout << setWidth(IntToString(i + 1), 10) << "|";
+		cout << setWidth(p->data.getHoTen(), 25) << "|";
+		cout << setWidth(p->data.getChucVu(), 25) << "|";
+		cout << setWidth(p->data.getNgaySinh(), 25) << "|";
+		cout << p->data.getHeSoLuong() << std::setprecision(1) << fixed << endl;
 		++i;
-
-		/*	cout << setWidth(IntToString(i), 10) << "|";
-			cout << setWidth(p->data.getHoTen(), 30) << "|";
-			cout << setWidth(p->data.getChucVu(), 40) << "|";
-			cout << setWidth(p->data.getNgaySinh(), 40) << "|";
-			cout << p->data.getHeSoLuong() << std::setprecision(1) << fixed << endl;
-			++i;*/
 	}
 	cout << endl;
 }
@@ -460,42 +503,6 @@ node Input(NhanVien value) {
 	head = AddTail(head, value);
 	return head;
 }
-int Find(string line, char x)
-{
-	int pos = 0;
-	while (line[pos] != '\0')
-	{
-		if (Equal(line[pos], x)) {
-			return pos;
-		}
-		else if (line[pos + 1] == '\0') {
-			return pos + 1;
-		}
-		else pos++;
-	}
-	/*for (int i = 0; i < line.length(); i++)
-	{
-		if (Equal(line[i], x)) {
-			return i;
-		}
-	}
-*/
-}
-string* Split(string line, char x) {
-	string* substring = new string[100];
-	int found, pos = 0;
-	string temp = line;
-	while (temp != "\0") {
-		found = Find(temp, x);
-		for (int i = 0; i < found; i++)
-		{
-			substring[pos] += temp[i];
-		}
-		temp.erase(0, found + 1);
-		pos++;
-	}
-	return substring;
-}
 char* ToCharArray(string line, char a[]) {
 	string tempLine = line;
 	for (int i = 0; i < tempLine.size(); i++)
@@ -524,12 +531,39 @@ node InputList(fstream &file, string name, node head) {
 		ptr = Split(line, ';');
 		string hoten = *(ptr);
 		string chucvu = *(ptr + 1);
-		string ngaysinh = *(ptr + 2);
+		string ngaysinh = outputBOD(*(ptr + 2));
 		float hsl = (float)StringToFloat(*(ptr + 3));
 		NhanVien* nhanvien = new NhanVien(hoten, chucvu, ngaysinh, hsl);
 		head = AddTail(head, *nhanvien);
 	}
 	file.close();
+	return head;
+}
+node OutPutList(node head, string name) {
+	fstream _file;
+	_file.open(name, ios::out);
+	_file << setWidth("STT", 10)
+		<< setWidth("Ho va ten", 25)
+		<< setWidth("Chuc vu", 25)
+		<< setWidth("Ngay thang nam sinh", 25)
+		<< setWidth("He so luong", 25)
+		<< "\n";
+	int i = 1;
+	for (node p = head; p != NULL; p = p->next)
+	{
+		float num = p->data.getHeSoLuong();
+		_file << setWidth(IntToString(i), 10)
+			<< setWidth(p->data.getHoTen(), 25)
+			<< setWidth(p->data.getChucVu(), 25)
+			<< setWidth(p->data.getNgaySinh(), 25)
+			<< fixed << setprecision(2)
+			<< num
+			<< "\n";
+		i++;
+	}
+	_file.close();
+	cin.get();
+	cout << "Xuat file thanh cong!!!";
 	return head;
 }
 bool compareBD(const string d1, const string d2) {
@@ -574,7 +608,7 @@ int ranking(const string str) {
 	string trainee = "thuc tap sinh";
 	int x = 0;
 
-	if (Equal(temp, ct)) int x = 10;
+	if (Equal(temp, ct))  x = 10;
 	else if (Equal(temp, pct))  x = 9.5;
 	else if (Equal(temp, gd))  x = 9;
 	else if (Equal(temp, pgd))  x = 8.5;
@@ -660,8 +694,8 @@ node SortedMerge(node a, node b, const int thutu, const int type) {
 	else if (b == NULL)
 		return a;
 	//chọn a hoặc b, và đệ qui
-	if (type == 0) {
-		if (thutu == 0) {
+	if (type == 2) {
+		if (thutu == 1) {
 			if (compareBD(a->data.getNgaySinh(), b->data.getNgaySinh())) {
 				result = a;
 				result->next = SortedMerge(a->next, b, thutu, type);
@@ -683,8 +717,8 @@ node SortedMerge(node a, node b, const int thutu, const int type) {
 		}
 		return result;
 	}
-	else if (type == 1) {
-		if (thutu == 0) {
+	else if (type == 3) {
+		if (thutu == 1) {
 			if (compareHSL(a->data.getHeSoLuong(), b->data.getHeSoLuong())) {
 				result = a;
 				result->next = SortedMerge(a->next, b, thutu, type);
@@ -706,8 +740,8 @@ node SortedMerge(node a, node b, const int thutu, const int type) {
 		}
 		return result;
 	}
-	else  if (type == 2) {
-		if (thutu == 0) {
+	else  if (type == 1) {
+		if (thutu == 1) {
 			if (compareCV(a->data.getChucVu(), b->data.getChucVu())) {
 				result = a;
 				result->next = SortedMerge(a->next, b, thutu, type);
@@ -729,8 +763,8 @@ node SortedMerge(node a, node b, const int thutu, const int type) {
 		}
 		return result;
 	}
-	else {
-		if (thutu == 0) {
+	else if (type == 0) {
+		if (thutu == 1) {
 			if (compareName(a->data.getHoTen(), b->data.getHoTen())) {
 				result = a;
 				result->next = SortedMerge(a->next, b, thutu, type);
@@ -752,6 +786,26 @@ node SortedMerge(node a, node b, const int thutu, const int type) {
 		}
 		return result;
 	}
+}
+int checkType(string line) {
+	if (Equal(toLower(line), "ho va ten") || Equal(toLower(line), "ten")) {
+		return 0;
+	}
+	else if (Equal(toLower(line), "chuc vu")) {
+		return 1;
+	}
+	else if ((Equal(toLower(line), "ngay thang nam sinh"))
+		|| (Equal(toLower(line), "ngay thang nam"))
+		|| (Equal(toLower(line), "ngay thang"))
+		|| (Equal(toLower(line), "nam sinh"))
+		|| (Equal(toLower(line), "ngay sinh")))
+	{
+		return 2;
+	}
+	else if (Equal(toLower(line), "luong") || Equal(toLower(line), "he so luong")) {
+		return 3;
+	}
+	else return -1;
 }
 void FrontBackSplit(node source, node* frontRef, node* backRef) {
 	node fast;
@@ -791,18 +845,89 @@ void MergeSort(node* headRef, const int thutu, const int type) {
 	*headRef = SortedMerge(a, b, thutu, type);
 }
 
+
 int main()
 {
 	fstream file;
 	string line;
-	char data[100];
-	int n = CountTotal(file, "Text.txt");
-	cout << "So nhan vien: " << n;
+	cout << setWidth('*', 100) << endl;
+	cout << "NHAP DANH SACH NHAN VIEN: ";
+	cin >> line;
+	int n = CountTotal(file, line);
+	cout << "TONG SO NHAN VIEN: " << n << endl;
+	cout << setWidth('*', 100) << endl;
+	node head = InitHead();
+	head = InputList(file, line, head);
+	Traverser(head);
+	cout << setWidth('*', 100) << endl;
+	int chon = -1;
+	int type = NULL;
+	char thutu = ' ';
+	string input = "\0";
+
+	while (chon != 0) {
+		//system("cls");
+		cout << setWidth('*', 100) << endl;
+
+		cout << "1.SAP XEP NHAN VIEN THEO TIEU CHI,THU TU" << endl;
+
+		cout << "2.THEM NHAN VIEN THEO VI TRI" << endl;
+
+		cout << "3.XOA NHAN VIEN THEO TU KHOA" << endl;
+
+		cout << "4.TIM NHAN VIEN THEO TU KHOA" << endl;
+
+		cout << "5.XUAT DANH SACH" << endl;
+
+		cout << "0.THOAT" << endl;
+
+		cout << setWidth('*', 100) << endl;
+
+
+		cin >> chon;
+
+		switch (chon)
+		{
+		case 1:
+			cout << setWidth('*', 100) << endl;
+			cout << "THU TU SAP XEP: " << endl;
+			cout << "A.Thap->Cao \n";
+			cout << "B.Cao->Thap \n";
+			cin >> thutu;
+			cout << "TIEU CHI SAP XEP: " << endl;
+			cin >> input;
+			type = checkType(input);
+			if (type == -1) {
+				cout << "LOI CU PHAP!!!";
+				break;
+			}
+			if (thutu == 'A') {
+				cout << setWidth('*', 100) << endl;
+				MergeSort(&head, 1, type);
+				Traverser(head);
+				cout << setWidth('*', 100) << endl;
+			}
+			else {
+				cout << setWidth('*', 100) << endl;
+				MergeSort(&head, 2, type);
+				Traverser(head);
+				cout << setWidth('*', 100) << endl;
+			}
+		case 2:
+		case 3:
+		case 4:
+		case 5:
+		default:
+			break;
+		};
+	}
+
+
+
 
 	//file.open("Text.txt");
 	////Bỏ dòng đầu tiên
 	//getline(file, line);
-
 	/*NhanVien nv=NhanVien("Nguyễn Văn A", "Tổng giám đốc", "11/11/1970", 2.5);
 	cout << nv.getHoTen() << endl;
 	cout << nv.getChucVu() << endl;
@@ -813,51 +938,51 @@ int main()
 	/*NhanVien* nv = new NhanVien[100];
 	int pos = 0;*/
 
-	node head = InitHead();
-	head = InputList(file, "Text.txt", head);
-	//while (getline(file, line)) {
-	//	string* ptr = new string[4];
-	//	ptr = Split(line, ';');
-	//	string hoten = *(ptr);
-	//	string chucvu = *(ptr + 1);
-	//	string ngaysinh = *(ptr + 2);
-	//	float hsl = StringToFloat(*(ptr + 3));
-	//	NhanVien* nhanvien = new NhanVien(hoten, chucvu, ngaysinh, hsl);
-	//	head = AddTail(head, *nhanvien);
-	//	/*	nv[pos] = *nhanvien;
-	//		pos++;*/
+	//node head = InitHead();
+	//head = InputList(file, "Text.txt", head);
+	////while (getline(file, line)) {
+	////	string* ptr = new string[4];
+	////	ptr = Split(line, ';');
+	////	string hoten = *(ptr);
+	////	string chucvu = *(ptr + 1);
+	////	string ngaysinh = *(ptr + 2);
+	////	float hsl = StringToFloat(*(ptr + 3));
+	////	NhanVien* nhanvien = new NhanVien(hoten, chucvu, ngaysinh, hsl);
+	////	head = AddTail(head, *nhanvien);
+	////	/*	nv[pos] = *nhanvien;
+	////		pos++;*/
+	////}
+	///*for (int i = 0; i < sizeof(nv); i++)
+	//{
+	//	nv[i].hienThi();
+	//	cout << endl;
 	//}
-	/*for (int i = 0; i < sizeof(nv); i++)
-	{
-		nv[i].hienThi();
-		cout << endl;
-	}
-	nv[2].hienThi();*/
-	Traverser(head);
-	/*NhanVien nv = NhanVien("Nguyen Thi C", "Truong phong", "10/01/1970", 3.0);
-	int pos = Search(head, nv);
-	if (pos == -1) {
-		cout << "Khong co nhan vien nay" << endl;
-	}
-	else cout << Get(head, pos).getHoTen();
-	DelByVal(head, nv);
-	Traverser(head);*/
-	/*file.close();*/
-	//head = SortByBD_SelectionSort(head, 0);//0-giảm dần|| 1=tăng dần
-	MergeSort(&head, 0, 1);
-	Traverser(head);
-	NhanVien nv = NhanVien("Dich Le Nhiet Ba", "Pho chu tich", "03/06/1992", 2.5);
-	//head= AddHead(head, nv);
-	//head = AddTail(head, nv);
-	head = AddAt(head, nv, 10);
-	Traverser(head);
-	head = DelByString(head, "3.0");
-	Traverser(head);
-	DisplaySBS(head, "tong giam doc");
+	//nv[2].hienThi();*/
+	//Traverser(head);
+	///*NhanVien nv = NhanVien("Nguyen Thi C", "Truong phong", "10/01/1970", 3.0);
+	//int pos = Search(head, nv);
+	//if (pos == -1) {
+	//	cout << "Khong co nhan vien nay" << endl;
+	//}
+	//else cout << Get(head, pos).getHoTen();
+	//DelByVal(head, nv);
+	//Traverser(head);*/
+	///*file.close();*/
+	////head = SortByBD_SelectionSort(head, 0);//0-giảm dần|| 1=tăng dần
+	//MergeSort(&head, 0, 1);
+	//Traverser(head);
+	//NhanVien nv = NhanVien("Dich Le Nhiet Ba", "Pho chu tich", "03/06/1992", 2.5);
+	////head= AddHead(head, nv);
+	////head = AddTail(head, nv);
+	//head = AddAt(head, nv, 10);
+	//Traverser(head);
+	//head = DelByString(head, "3.0");
+	//Traverser(head);
+	//DisplaySBS(head, "1.0");
+	//OutPutList(head, "C:\\Users\\Duy\\Desktop\\output.txt");
 
-
-	/*cout << StringToFloat("2.7") << endl;
-	cout << FloatToString(2.7) << endl;*/
+	///*cout << StringToFloat("2.7") << endl;
+	//cout << FloatToString(2.7) << endl;*/
 	std::system("pause");
 	return 0;
 }

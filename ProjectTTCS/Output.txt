@@ -1,0 +1,16 @@
+STT       Ho va ten                Chuc vu                  Ngay thang nam sinh      He so luong              
+1         Nguyen Ha Khanh Duy      Thuc tap sinh            04/10/1997               1
+2         Nguyen Thi Em            Nhan vien                04/10/1990               1.5
+3         Nguyen Ha Khanh Duy      Thuc tap sinh            01/10/1997               1.5
+4         Nguyen Thi Linh          Nhan vien                05/10/1990               1.5
+5         Nguyen Ha Khanh Duy      Thuc tap sinh            04/10/1997               2.0
+6         Nguyen Van Anh           Thu ky                   10/11/1990               2.5
+7         Nguyen Van Anh           Thu ky                   08/11/1990               2.5
+8         Nguyen Thi Dung          Pho phong                20/05/1980               2.7
+9         Nguyen Thi Duyen         Pho phong                20/05/1980               2.7
+10        Nguyen Thi Diem          Pho phong                21/05/1980               2.7
+11        Dich Le Nhiet Ba         Pho chu tich             03/06/1992               2.5
+12        Nguyen Thi En            Nhan vien                04/10/1990               3.5
+13        Nguyen Van Binh          Giam doc                 12/2/1960                5.0
+14        Nguyen Van Ba            Giam doc                 02/2/1960                5.5
+15        Ha Tuan Anh              Chu tich                 22/06/1929               7.0
