@@ -1,13 +1,16 @@
 ﻿  Main.cpp
-d:\vs workspace\projectttcs\projectttcs\main.cpp(68): warning C4018: '<': signed/unsigned mismatch
-d:\vs workspace\projectttcs\projectttcs\main.cpp(84): warning C4018: '<': signed/unsigned mismatch
-d:\vs workspace\projectttcs\projectttcs\main.cpp(508): warning C4018: '<': signed/unsigned mismatch
-d:\vs workspace\projectttcs\projectttcs\main.cpp(612): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-d:\vs workspace\projectttcs\projectttcs\main.cpp(614): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-d:\vs workspace\projectttcs\projectttcs\main.cpp(616): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-d:\vs workspace\projectttcs\projectttcs\main.cpp(618): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-d:\vs workspace\projectttcs\projectttcs\main.cpp(643): warning C4018: '<': signed/unsigned mismatch
-d:\vs workspace\projectttcs\projectttcs\main.cpp(645): warning C4018: '<': signed/unsigned mismatch
-d:\vs workspace\projectttcs\projectttcs\main.cpp(139): warning C4715: 'Find': not all control paths return a value
-d:\vs workspace\projectttcs\projectttcs\main.cpp(789): warning C4715: 'SortedMerge': not all control paths return a value
+d:\vs workspace\projectttcs\projectttcs\main.cpp(69): warning C4018: '<': signed/unsigned mismatch
+d:\vs workspace\projectttcs\projectttcs\main.cpp(85): warning C4018: '<': signed/unsigned mismatch
+d:\vs workspace\projectttcs\projectttcs\main.cpp(430): warning C4305: 'argument': truncation from 'int' to 'char'
+d:\vs workspace\projectttcs\projectttcs\main.cpp(430): warning C4309: 'argument': truncation of constant value
+d:\vs workspace\projectttcs\projectttcs\main.cpp(507): warning C4018: '<': signed/unsigned mismatch
+d:\vs workspace\projectttcs\projectttcs\main.cpp(611): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+d:\vs workspace\projectttcs\projectttcs\main.cpp(613): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+d:\vs workspace\projectttcs\projectttcs\main.cpp(615): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+d:\vs workspace\projectttcs\projectttcs\main.cpp(617): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+d:\vs workspace\projectttcs\projectttcs\main.cpp(1008): warning C4305: 'argument': truncation from 'int' to 'char'
+d:\vs workspace\projectttcs\projectttcs\main.cpp(1008): warning C4309: 'argument': truncation of constant value
+d:\vs workspace\projectttcs\projectttcs\main.cpp(1012): warning C4305: 'argument': truncation from 'int' to 'char'
+d:\vs workspace\projectttcs\projectttcs\main.cpp(1012): warning C4309: 'argument': truncation of constant value
+d:\vs workspace\projectttcs\projectttcs\main.cpp(140): warning C4715: 'Find': not all control paths return a value
   ProjectTTCS.vcxproj -> D:\VS Workspace\ProjectTTCS\Debug\ProjectTTCS.exe
