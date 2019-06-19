@@ -1,1 +1,16 @@
-﻿
+﻿Họ và tên;Chức vụ;Ngày tháng năm sinh;Hệ số lương
+Nguyễn Văn A;Thư ký;10/11/1980;2.5
+Nguyễn Văn B;Giám đốc;10/12/1960;10.0
+Nguyễn Thị C;Trưởng phòng;11/11/1970;2.6
+Nguyễn Thị D;Nhân viên;22/03/1989;2.0
+Nguyễn Thị E;Phó phòng;07/11/1975;2.4
+Nguyễn Văn A;Thư ký;10/11/1980;2.5
+Nguyễn Văn B;Giám đốc;10/12/1960;10.0
+Nguyễn Thị C;Trưởng phòng;11/11/1970;2.6
+Nguyễn Thị D;Nhân viên;22/03/1989;2.0
+Nguyễn Thị E;Phó phòng;07/11/1975;2.4
+Nguyễn Văn A;Thư ký;10/11/1980;2.5
+Nguyễn Văn B;Giám đốc;10/12/1960;10.0
+Nguyễn Thị C;Trưởng phòng;11/11/1970;2.6
+Nguyễn Thị D;Nhân viên;22/03/1989;2.0
+Nguyễn Thị E;Phó phòng;07/11/1975;2.4

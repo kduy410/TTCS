@@ -6,6 +6,8 @@
 #include "NhanVien.h"
 #include <iomanip>
 #include <cstdlib>
+#include <io.h>
+#include <fcntl.h>
 
 using namespace std;
 
@@ -57,6 +59,31 @@ bool Equal(string x, string y) {
 bool Equal(string x, char y) {
 	int pos = 0;
 	while (x != "\0")
+	{
+		if (x[pos] == y)
+			return true;
+		else pos++;
+	}
+	return false;
+}
+bool Equal(wchar_t x, wchar_t y) {
+	return (x == y) ? true : false;
+}
+bool Equal(wstring x, wstring y) {
+	//int pos = 0;
+	//if (x[0] == y[0]) {
+	//	while (x[pos] != '\0' && y[pos] != '\0') {
+	//		if (x[pos] != y[pos]) return false;
+	//		else pos++;
+	//	}
+	//	return true;
+	//}
+	//else return false;
+	return (x == y) ? true : false;
+}
+bool Equal(wstring x, wchar_t y) {
+	int pos = 0;
+	while (x != L"\0")
 	{
 		if (x[pos] == y)
 			return true;
@@ -117,7 +144,49 @@ string setWidth(char x, int size) {
 	}
 	return temp;
 }
+wstring setWidth(wstring n, int size) {
+	int temp = size - (n).length();
+	if (temp < 0) {
+		return n;
+	}
+	else {
+		for (int i = 0; i < temp; i++)
+		{
+			n += ' ';
+		}
+	}
+	return n;
+}
+wstring setWidth(wchar_t x, int size) {
+	wstring temp = &x;
+	for (int i = 0; i < size; i++)
+	{
+		temp += x;
+	}
+	return temp;
+}
 int Find(string line, char x)
+{
+	int pos = 0;
+	while (line[pos] != '\0')
+	{
+		if (Equal(line[pos], x)) {
+			return pos;
+		}
+		else if (line[pos + 1] == '\0') {
+			return pos + 1;
+		}
+		else pos++;
+	}
+	/*for (int i = 0; i < line.length(); i++)
+	{
+		if (Equal(line[i], x)) {
+			return i;
+		}
+	}
+*/
+}
+int Find(wstring line, wchar_t x)
 {
 	int pos = 0;
 	while (line[pos] != '\0')
@@ -153,6 +222,21 @@ string* Split(string line, char x) {
 	}
 	return substring;
 }
+wstring* Split(wstring line, wchar_t x) {
+	wstring* substring = new wstring[100];
+	int found, pos = 0;
+	wstring temp = line;
+	while (temp != L"\0") {
+		found = Find(temp, x);
+		for (int i = 0; i < found; i++)
+		{
+			substring[pos] += temp[i];
+		}
+		temp.erase(0, found + 1);
+		pos++;
+	}
+	return substring;
+}
 string outputBOD(string line) {
 	string* a = Split(line, '/');
 	string day, mon, year;
@@ -169,8 +253,15 @@ string outputBOD(string line) {
 	string x = day + "/" + mon + "/" + *(a + 2);
 	return x;
 }
+///////////KHÔNG DẤU
+//struct LinkedList {
+//	NhanVien data;
+//	struct LinkedList* next;
+//};
+//typedef LinkedList* node;//Thay kiểu dữ liệu = NODE cho ngắn gọn
+///////////CÓ DẤU
 struct LinkedList {
-	NhanVien data;
+	NhanVien_TV data;
 	struct LinkedList* next;
 };
 typedef LinkedList* node;//Thay kiểu dữ liệu = NODE cho ngắn gọn
@@ -434,7 +525,7 @@ void DisplaySBS(node head, string sub) {
 		if (i != -1) {
 			flag++;
 			NhanVien value = Get(head, i);
-			cout << setWidth('-', 100)<<endl;
+			cout << setWidth('-', 100) << endl;
 			cout << "STT: " << i + 1 << endl;
 			cout << "Ho ten : " << value.getHoTen() << endl;
 			cout << "Chuc vu : " << value.getChucVu() << endl;
@@ -467,6 +558,26 @@ void Traverser(node head) {
 		cout << setWidth(p->data.getChucVu(), 25) << "|";
 		cout << setWidth(p->data.getNgaySinh(), 25) << "|";
 		cout << fixed << setprecision(3) << p->data.getHeSoLuong() << endl;
+		++i;
+	}
+	cout << endl;
+}
+void Traverser_TV(node head) {
+	cout << endl;
+	int i = 0;
+	wcout << setWidth(L'=', 100) << endl;
+	wcout << setWidth(L"STT", 10) << "|";
+	wcout << setWidth(L"Họ và tên", 25) << "|";
+	wcout << setWidth(L"Chức vụ", 25) << "|";
+	wcout << setWidth(L"Ngày tháng năm sinh", 25) << "|";
+	wcout << L"Hệ số lương" << endl;
+	for (node p = head; p != NULL; p = p->next)
+	{
+		cout << setWidth(IntToString(i + 1), 10) << "|";
+		wcout << setWidth(p->data.getHoTen(), 25) << "|";
+		wcout << setWidth(p->data.getChucVu(), 25) << "|";
+		wcout << setWidth(p->data.getNgaySinh(), 25) << "|";
+		wcout << fixed << setprecision(3) << p->data.getHeSoLuong() << endl;
 		++i;
 	}
 	cout << endl;
@@ -521,6 +632,17 @@ int CountTotal(fstream &file, string dir) {
 	file.close();
 	return count;
 }
+int CountTotal(wfstream &file, wstring dir) {
+	file.open(dir);
+	int count = 0;
+	wstring line;
+	getline(file, line);
+	while (getline(file, line)) {
+		count++;
+	}
+	file.close();
+	return count;
+}
 node InputList(fstream &file, string name, node head) {
 	file.open(name);
 	string line;
@@ -531,6 +653,23 @@ node InputList(fstream &file, string name, node head) {
 		string hoten = *(ptr);
 		string chucvu = *(ptr + 1);
 		string ngaysinh = outputBOD(*(ptr + 2));
+		float hsl = (float)StringToFloat(*(ptr + 3));
+		NhanVien* nhanvien = new NhanVien(hoten, chucvu, ngaysinh, hsl);
+		head = AddTail(head, *nhanvien);
+	}
+	file.close();
+	return head;
+}
+node InputList(wfstream &file, wstring name, node head) {
+	file.open(name);
+	wstring line;
+	getline(file, line);
+	while (getline(file, line)) {
+		wstring* ptr = new wstring[4];
+		ptr = Split(line, ';');
+		wstring hoten = *(ptr);
+		wstring chucvu = *(ptr + 1);
+		wstring ngaysinh = outputBOD(*(ptr + 2));
 		float hsl = (float)StringToFloat(*(ptr + 3));
 		NhanVien* nhanvien = new NhanVien(hoten, chucvu, ngaysinh, hsl);
 		head = AddTail(head, *nhanvien);
@@ -945,13 +1084,31 @@ void Display(node head) {
 }
 int main()
 {
-	fstream file;
+	_setmode(_fileno(stdin), _O_U16TEXT);
+	_setmode(_fileno(stdout), _O_U16TEXT);
+	//KHÔNG DẤU
+	/*fstream file;
 	string line;
 	cout << setWidth('*', 100) << endl;
 	cout << "NHAP DANH SACH NHAN VIEN: ";
 	cin >> line;
 	int n = CountTotal(file, line);
 	cout << "TONG SO NHAN VIEN: " << n << endl;
+	cout << setWidth('*', 100) << endl;
+	node head = InitHead();
+	head = InputList(file, line, head);
+	Traverser(head);
+	cout << setWidth('*', 100) << endl;
+	int chon = -1;*/
+
+	//CÓ DẤU
+	wfstream file;
+	wstring line;
+	cout << setWidth('*', 100) << endl;
+	wcout << L"NHẬP DANH SÁCH NHÂN VIÊN: ";
+	wcin >> line;
+	int n = CountTotal(file, line);
+	wcout << L"TỔNG SỐ NHÂN VIÊN: " << n << endl;
 	cout << setWidth('*', 100) << endl;
 	node head = InitHead();
 	head = InputList(file, line, head);
@@ -1008,7 +1165,7 @@ int main()
 			cout << setWidth('!~!', 100) << endl;
 			cout << "NHAP DIA CHI: ";
 			getline(cin, dir);
-			OutPutList(head,dir);
+			OutPutList(head, dir);
 			cout << setWidth('!~!', 100) << endl;
 		}
 	}
