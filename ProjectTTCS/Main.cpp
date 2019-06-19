@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include "NhanVien.h"
+#include "NhanVien_TV.h"
 #include <iomanip>
 #include <cstdlib>
 #include <io.h>
@@ -66,31 +67,6 @@ bool Equal(string x, char y) {
 	}
 	return false;
 }
-bool Equal(wchar_t x, wchar_t y) {
-	return (x == y) ? true : false;
-}
-bool Equal(wstring x, wstring y) {
-	//int pos = 0;
-	//if (x[0] == y[0]) {
-	//	while (x[pos] != '\0' && y[pos] != '\0') {
-	//		if (x[pos] != y[pos]) return false;
-	//		else pos++;
-	//	}
-	//	return true;
-	//}
-	//else return false;
-	return (x == y) ? true : false;
-}
-bool Equal(wstring x, wchar_t y) {
-	int pos = 0;
-	while (x != L"\0")
-	{
-		if (x[pos] == y)
-			return true;
-		else pos++;
-	}
-	return false;
-}
 string toLower(const string input) {
 	string str = input;
 	for (int i = 0; i < str.length(); i++)
@@ -138,27 +114,6 @@ string setWidth(string n, int size) {
 }
 string setWidth(char x, int size) {
 	string temp = &x;
-	for (int i = 0; i < size; i++)
-	{
-		temp += x;
-	}
-	return temp;
-}
-wstring setWidth(wstring n, int size) {
-	int temp = size - (n).length();
-	if (temp < 0) {
-		return n;
-	}
-	else {
-		for (int i = 0; i < temp; i++)
-		{
-			n += ' ';
-		}
-	}
-	return n;
-}
-wstring setWidth(wchar_t x, int size) {
-	wstring temp = &x;
 	for (int i = 0; i < size; i++)
 	{
 		temp += x;
@@ -222,21 +177,6 @@ string* Split(string line, char x) {
 	}
 	return substring;
 }
-wstring* Split(wstring line, wchar_t x) {
-	wstring* substring = new wstring[100];
-	int found, pos = 0;
-	wstring temp = line;
-	while (temp != L"\0") {
-		found = Find(temp, x);
-		for (int i = 0; i < found; i++)
-		{
-			substring[pos] += temp[i];
-		}
-		temp.erase(0, found + 1);
-		pos++;
-	}
-	return substring;
-}
 string outputBOD(string line) {
 	string* a = Split(line, '/');
 	string day, mon, year;
@@ -253,15 +193,8 @@ string outputBOD(string line) {
 	string x = day + "/" + mon + "/" + *(a + 2);
 	return x;
 }
-///////////KHÔNG DẤU
-//struct LinkedList {
-//	NhanVien data;
-//	struct LinkedList* next;
-//};
-//typedef LinkedList* node;//Thay kiểu dữ liệu = NODE cho ngắn gọn
-///////////CÓ DẤU
 struct LinkedList {
-	NhanVien_TV data;
+	NhanVien data;
 	struct LinkedList* next;
 };
 typedef LinkedList* node;//Thay kiểu dữ liệu = NODE cho ngắn gọn
@@ -562,26 +495,6 @@ void Traverser(node head) {
 	}
 	cout << endl;
 }
-void Traverser_TV(node head) {
-	cout << endl;
-	int i = 0;
-	wcout << setWidth(L'=', 100) << endl;
-	wcout << setWidth(L"STT", 10) << "|";
-	wcout << setWidth(L"Họ và tên", 25) << "|";
-	wcout << setWidth(L"Chức vụ", 25) << "|";
-	wcout << setWidth(L"Ngày tháng năm sinh", 25) << "|";
-	wcout << L"Hệ số lương" << endl;
-	for (node p = head; p != NULL; p = p->next)
-	{
-		cout << setWidth(IntToString(i + 1), 10) << "|";
-		wcout << setWidth(p->data.getHoTen(), 25) << "|";
-		wcout << setWidth(p->data.getChucVu(), 25) << "|";
-		wcout << setWidth(p->data.getNgaySinh(), 25) << "|";
-		wcout << fixed << setprecision(3) << p->data.getHeSoLuong() << endl;
-		++i;
-	}
-	cout << endl;
-}
 node InitHead() {
 	node head;
 	head = NULL;
@@ -632,17 +545,6 @@ int CountTotal(fstream &file, string dir) {
 	file.close();
 	return count;
 }
-int CountTotal(wfstream &file, wstring dir) {
-	file.open(dir);
-	int count = 0;
-	wstring line;
-	getline(file, line);
-	while (getline(file, line)) {
-		count++;
-	}
-	file.close();
-	return count;
-}
 node InputList(fstream &file, string name, node head) {
 	file.open(name);
 	string line;
@@ -653,23 +555,6 @@ node InputList(fstream &file, string name, node head) {
 		string hoten = *(ptr);
 		string chucvu = *(ptr + 1);
 		string ngaysinh = outputBOD(*(ptr + 2));
-		float hsl = (float)StringToFloat(*(ptr + 3));
-		NhanVien* nhanvien = new NhanVien(hoten, chucvu, ngaysinh, hsl);
-		head = AddTail(head, *nhanvien);
-	}
-	file.close();
-	return head;
-}
-node InputList(wfstream &file, wstring name, node head) {
-	file.open(name);
-	wstring line;
-	getline(file, line);
-	while (getline(file, line)) {
-		wstring* ptr = new wstring[4];
-		ptr = Split(line, ';');
-		wstring hoten = *(ptr);
-		wstring chucvu = *(ptr + 1);
-		wstring ngaysinh = outputBOD(*(ptr + 2));
 		float hsl = (float)StringToFloat(*(ptr + 3));
 		NhanVien* nhanvien = new NhanVien(hoten, chucvu, ngaysinh, hsl);
 		head = AddTail(head, *nhanvien);
@@ -1084,10 +969,7 @@ void Display(node head) {
 }
 int main()
 {
-	_setmode(_fileno(stdin), _O_U16TEXT);
-	_setmode(_fileno(stdout), _O_U16TEXT);
-	//KHÔNG DẤU
-	/*fstream file;
+		fstream file;
 	string line;
 	cout << setWidth('*', 100) << endl;
 	cout << "NHAP DANH SACH NHAN VIEN: ";
@@ -1099,24 +981,8 @@ int main()
 	head = InputList(file, line, head);
 	Traverser(head);
 	cout << setWidth('*', 100) << endl;
-	int chon = -1;*/
-
-	//CÓ DẤU
-	wfstream file;
-	wstring line;
-	cout << setWidth('*', 100) << endl;
-	wcout << L"NHẬP DANH SÁCH NHÂN VIÊN: ";
-	wcin >> line;
-	int n = CountTotal(file, line);
-	wcout << L"TỔNG SỐ NHÂN VIÊN: " << n << endl;
-	cout << setWidth('*', 100) << endl;
-	node head = InitHead();
-	head = InputList(file, line, head);
-	Traverser(head);
-	cout << setWidth('*', 100) << endl;
 	int chon = -1;
-
-	while (chon != 0) {
+		while (chon != 0) {
 		//system("cls");
 		cout << setWidth('*', 100) << endl;
 
@@ -1135,7 +1001,6 @@ int main()
 		cout << setWidth('*', 100) << endl;
 
 		cin >> chon;
-
 
 		if (chon == 1) {
 			SortAll(&head);
@@ -1169,68 +1034,6 @@ int main()
 			cout << setWidth('!~!', 100) << endl;
 		}
 	}
-
-
-
-
-	//file.open("Text.txt");
-	////Bỏ dòng đầu tiên
-	//getline(file, line);
-	/*NhanVien nv=NhanVien("Nguyễn Văn A", "Tổng giám đốc", "11/11/1970", 2.5);
-	cout << nv.getHoTen() << endl;
-	cout << nv.getChucVu() << endl;
-	cout << nv.getNgaySinh() << endl;
-	cout << nv.getHeSoLuong() << endl;
-
-	NhanVien a[100] = { nv };*/
-	/*NhanVien* nv = new NhanVien[100];
-	int pos = 0;*/
-
-	//node head = InitHead();
-	//head = InputList(file, "Text.txt", head);
-	////while (getline(file, line)) {
-	////	string* ptr = new string[4];
-	////	ptr = Split(line, ';');
-	////	string hoten = *(ptr);
-	////	string chucvu = *(ptr + 1);
-	////	string ngaysinh = *(ptr + 2);
-	////	float hsl = StringToFloat(*(ptr + 3));
-	////	NhanVien* nhanvien = new NhanVien(hoten, chucvu, ngaysinh, hsl);
-	////	head = AddTail(head, *nhanvien);
-	////	/*	nv[pos] = *nhanvien;
-	////		pos++;*/
-	////}
-	///*for (int i = 0; i < sizeof(nv); i++)
-	//{
-	//	nv[i].hienThi();
-	//	cout << endl;
-	//}
-	//nv[2].hienThi();*/
-	//Traverser(head);
-	///*NhanVien nv = NhanVien("Nguyen Thi C", "Truong phong", "10/01/1970", 3.0);
-	//int pos = Search(head, nv);
-	//if (pos == -1) {
-	//	cout << "Khong co nhan vien nay" << endl;
-	//}
-	//else cout << Get(head, pos).getHoTen();
-	//DelByVal(head, nv);
-	//Traverser(head);*/
-	///*file.close();*/
-	////head = SortByBD_SelectionSort(head, 0);//0-giảm dần|| 1=tăng dần
-	//MergeSort(&head, 0, 1);
-	//Traverser(head);
-	//NhanVien nv = NhanVien("Dich Le Nhiet Ba", "Pho chu tich", "03/06/1992", 2.5);
-	////head= AddHead(head, nv);
-	////head = AddTail(head, nv);
-	//head = AddAt(head, nv, 10);
-	//Traverser(head);
-	//head = DelByString(head, "3.0");
-	//Traverser(head);
-	//DisplaySBS(head, "1.0");
-	//OutPutList(head, "C:\\Users\\Duy\\Desktop\\output.txt");
-
-	///*cout << StringToFloat("2.7") << endl;
-	//cout << FloatToString(2.7) << endl;*/
 	std::system("pause");
 	return 0;
 }

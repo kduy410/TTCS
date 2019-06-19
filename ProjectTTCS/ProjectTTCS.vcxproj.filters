@@ -21,9 +21,6 @@
     <ClCompile Include="NhanVien.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="NhanVien_TV.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Text.txt">
@@ -32,9 +29,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NhanVien.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NhanVien_TV.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
