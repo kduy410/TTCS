@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 #include "NhanVien.h"
-#include "NhanVien_TV.h"
 #include <iomanip>
 #include <cstdlib>
 #include <io.h>
@@ -969,7 +968,7 @@ void Display(node head) {
 }
 int main()
 {
-		fstream file;
+	fstream file;
 	string line;
 	cout << setWidth('*', 100) << endl;
 	cout << "NHAP DANH SACH NHAN VIEN: ";
@@ -982,7 +981,7 @@ int main()
 	Traverser(head);
 	cout << setWidth('*', 100) << endl;
 	int chon = -1;
-		while (chon != 0) {
+	while (chon != 0) {
 		//system("cls");
 		cout << setWidth('*', 100) << endl;
 
